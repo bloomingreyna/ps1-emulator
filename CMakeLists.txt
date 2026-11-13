@@ -13,6 +13,9 @@ add_executable(blps1
     src/instructions/add.cpp
     src/instructions/and.cpp
     src/instructions/branch.cpp
+    src/instructions/divide.cpp
+    src/instructions/move.cpp
+    src/instructions/multiply.cpp
 )
 
 target_include_directories(blps1 PRIVATE include)

@@ -2,7 +2,7 @@
 
 // TODO: All of this lol
 
-void instructions::branch_equal(cpu& c, opcode o)
+void branch_equal(cpu& c, opcode o)
 {
     
 }

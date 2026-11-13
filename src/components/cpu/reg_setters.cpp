@@ -14,12 +14,12 @@ void cpu::set_pc(uint32_t value)
     cpu_regs.pc = value;
 }
 
-void cpu::set_hi(uint32_t value)
+void cpu::set_hi(uint32_t value, unsigned int cycle_delay)
 {
-    cpu_regs.hi = value;
+    cpu_regs.hi_fresh = value;
 }
 
-void cpu::set_lo(uint32_t value)
+void cpu::set_lo(uint32_t value, unsigned int cycle_delay)
 {
-    cpu_regs.lo = value;
+    cpu_regs.lo_fresh = value;
 }
