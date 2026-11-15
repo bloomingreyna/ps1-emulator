@@ -40,3 +40,28 @@ void move_to_lo(cpu& c, opcode o);
 
 void multiply_word(cpu& c, opcode o);
 void multiply_uword(cpu& c, opcode o);
+
+void nor_reg(cpu& c, opcode o);
+
+void or_reg(cpu& c, opcode o);
+void or_imm(cpu& c, opcode o);
+
+// TODO: Store
+
+void shift_word_left_logical(cpu& c, opcode o);
+void shift_word_left_logical_var(cpu& c, opcode o);
+
+void set_on_less_than(cpu& c, opcode o);
+void set_on_less_than_imm(cpu& c, opcode o);
+void set_on_less_than_imm_unsigned(cpu& c, opcode o);
+void set_on_less_than_unsigned(cpu& c, opcode o);
+
+void shift_word_right_arithmetic(cpu& c, opcode o);
+void shift_word_right_arithmetic_var(cpu& c, opcode o);
+void shift_word_right_logical(cpu& c, opcode o);
+void shift_word_right_logical_var(cpu& c, opcode o);
+
+// TODO: Store, subtract
+
+void exclusive_or(cpu& c, opcode o);
+void exclusive_or_imm(cpu& c, opcode o);

@@ -15,11 +15,12 @@ add_executable(blps1
     src/instructions/opcode.cpp
     src/instructions/special_dispatch.cpp
     src/instructions/add.cpp
-    src/instructions/and.cpp
+    src/instructions/bitwise.cpp
     src/instructions/branch.cpp
     src/instructions/divide.cpp
     src/instructions/move.cpp
     src/instructions/multiply.cpp
+    src/instructions/set_on.cpp
 )
 
 target_include_directories(blps1 PRIVATE include)
