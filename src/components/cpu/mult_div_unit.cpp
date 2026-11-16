@@ -6,6 +6,28 @@ namespace
     constexpr unsigned int DIV_CYCLES{35};
 }
 
+void cpu::multiply(int64_t lhs, int64_t rhs) { md_unit.multiply(lhs, rhs); }
+void cpu::multiply(uint64_t lhs, uint64_t rhs) { md_unit.multiply(lhs, rhs); }
+void cpu::divide(int32_t lhs, int32_t rhs) { md_unit.divide(lhs, rhs); }
+void cpu::divide(uint32_t lhs, uint32_t rhs) { md_unit.divide(lhs, rhs); }
+
+void mult_div_unit::tick()
+{
+    if (op_time_remaining > 0)
+    {
+        executing = true;
+        if (--op_time_remaining == 0)
+        {
+            hi = operation_queue.front().hi;
+            lo = operation_queue.front().lo;
+            executing = false;
+            operation_queue.pop();
+        }
+    }
+
+    if (!operation_queue.empty()) { op_time_remaining = operation_queue.front().delay; }
+}
+
 void mult_div_unit::multiply(int64_t lhs, int64_t rhs)
 {
     int64_t result{lhs * rhs};
