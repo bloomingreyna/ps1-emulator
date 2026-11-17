@@ -20,4 +20,8 @@ struct opcode
     uint32_t dest_reg() const;
     uint32_t shift_amt() const;
     uint32_t function() const;
+
+    // Functionally identical to other opcode parameters, but implemented for code readability
+    uint32_t base_addr() const;
+    uint32_t offset() const;
 };

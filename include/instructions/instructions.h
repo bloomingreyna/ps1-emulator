@@ -28,7 +28,9 @@ void branch_not_equal(cpu& c, opcode o);
 void divide_word(cpu& c, opcode o);
 void divide_uword(cpu& c, opcode o);
 
-// TODO: Various instructions, see R3000 hardware manual for details
+// TODO: Jump instructions
+
+// Load instructions
 
 void move_from_hi(cpu& c, opcode o);
 void move_from_lo(cpu& c, opcode o);

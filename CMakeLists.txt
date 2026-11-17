@@ -7,6 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(blps1
     src/main.cpp
     src/components/cpu/execute_instruction.cpp
+    src/components/cpu/load.cpp
     src/components/cpu/mult_div_unit.cpp
     src/components/cpu/reg_getters.cpp
     src/components/cpu/reg_setters.cpp
@@ -16,6 +17,7 @@ add_executable(blps1
     src/instructions/bitwise.cpp
     src/instructions/branch.cpp
     src/instructions/divide.cpp
+    src/instructions/load.cpp
     src/instructions/move.cpp
     src/instructions/multiply.cpp
     src/instructions/set_on.cpp
