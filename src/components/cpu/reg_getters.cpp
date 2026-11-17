@@ -11,5 +11,5 @@ uint32_t cpu::get_gpr(std::size_t index) const
 }
 
 uint32_t cpu::get_pc() const { return pc; }
-uint32_t cpu::get_hi() const { return md_unit.hi; }
-uint32_t cpu::get_lo() const { return md_unit.lo; }
+uint32_t cpu::get_hi() const { return hi; }
+uint32_t cpu::get_lo() const { return lo; }

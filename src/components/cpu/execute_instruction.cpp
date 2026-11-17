@@ -2,14 +2,9 @@
 
 void cpu::execute_instruction()
 {
-    md_unit.tick();
-
     // TODO: Make sure of delay vs instant load behavior
-    if (load_mem && delay_load_flag) {
-        load();
-        load_mem = false;
-    }
+    if (delay_loading && finish_delay_loading) { load_delayed(); }
 
     write_occurred = false;
-    delay_load_flag = load_mem;
+    finish_delay_loading = delay_loading;
 }

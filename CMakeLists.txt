@@ -8,7 +8,6 @@ add_executable(blps1
     src/main.cpp
     src/components/cpu/execute_instruction.cpp
     src/components/cpu/load.cpp
-    src/components/cpu/mult_div_unit.cpp
     src/components/cpu/reg_getters.cpp
     src/components/cpu/reg_setters.cpp
     src/instructions/opcode.cpp
