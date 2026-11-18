@@ -5,9 +5,12 @@
 void cpu::set_gpr(std::size_t index, uint32_t value)
 {
     assert(index < 32);
-    if (index != 0) { gprs[index] = value; }
-    write_occurred = true;
-    written_index_priority = index;
+    if (index != 0) 
+    {
+        gprs[index] = value;
+    }
+    load_vars.write_occurred = true;
+    load_vars.written_index_priority = index;
 }
 
 void cpu::set_pc(uint32_t value) { pc = value; }

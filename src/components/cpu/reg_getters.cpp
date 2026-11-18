@@ -6,7 +6,10 @@
 uint32_t cpu::get_gpr(std::size_t index) const
 {
     assert(index < 32);
-    if (index == 0) { return 0; }
+    if (index == 0)
+    {
+        return 0;
+    }
     return gprs[index];
 }
 

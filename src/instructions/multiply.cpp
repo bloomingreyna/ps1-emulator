@@ -2,8 +2,8 @@
 
 void multiply_word(cpu& c, opcode o)
 {
-    int64_t src{static_cast<int64_t>(c.get_gpr(o.src_reg()))};
-    int64_t target{static_cast<int64_t>(c.get_gpr(o.target_reg()))};
+    int64_t src{static_cast<int32_t>(c.get_gpr(o.src_reg()))};
+    int64_t target{static_cast<int32_t>(c.get_gpr(o.target_reg()))};
     int64_t result{src * target};
 
     c.set_hi(result >> 32);

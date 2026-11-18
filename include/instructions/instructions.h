@@ -30,7 +30,16 @@ void divide_uword(cpu& c, opcode o);
 
 // TODO: Jump instructions
 
-// Load instructions
+void load_byte_signed(cpu& c, opcode o);
+void load_byte_unsigned(cpu& c, opcode o);
+void load_halfword_signed(cpu& c, opcode o);
+void load_halfword_unsigned(cpu& c, opcode o);
+void load_upper_immediate(cpu& c, opcode o);
+void load_word(cpu& c, opcode o);
+void load_word_to_coprocessor(cpu& c, opcode o);
+void load_word_left(cpu& c, opcode o);
+void load_word_right(cpu& c, opcode o);
+
 
 void move_from_hi(cpu& c, opcode o);
 void move_from_lo(cpu& c, opcode o);

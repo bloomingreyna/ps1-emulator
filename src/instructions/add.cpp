@@ -13,14 +13,14 @@ void add_imm_word(cpu& c, opcode o)
 {
     uint32_t src{c.get_gpr(o.src_reg())};
     int32_t imm{static_cast<int16_t>(o.immediate())};
-    c.set_gpr(o.target_reg(), src + static_cast<uint32_t>(imm));
+    c.set_gpr(o.target_reg(), src + imm);
 }
 
 void add_imm_uword(cpu& c, opcode o)
 {
     uint32_t src{c.get_gpr(o.src_reg())};
     int32_t imm{static_cast<int16_t>(o.immediate())};
-    c.set_gpr(o.target_reg(), src + static_cast<uint32_t>(imm));
+    c.set_gpr(o.target_reg(), src + imm);
 }
 
 void add_uword(cpu& c, opcode o)

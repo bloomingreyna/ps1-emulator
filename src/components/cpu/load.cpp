@@ -1,18 +1,110 @@
 #include "components/cpu.h"
 
-void cpu::load_delayed()
+void cpu::load()
 {
-    bool no_write_override{!write_occurred || load_index_buffer != written_index_priority};
-    if (load_index_buffer != 0 && no_write_override) { gprs[load_index_buffer] = load_data_buffer; }
-    delay_loading = false;
+    bool no_write_override{!load_vars.write_occurred || load_vars.load_index != load_vars.written_index_priority};
+    if (load_vars.load_index != 0 && no_write_override)
+    {
+        gprs[load_vars.load_index] = load_vars.load_data;
+    }
+    load_vars.delay_loading = false;
 }
 
-void cpu::prepare_delayed_load_signed(uint32_t addr, std::size_t index)
+void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness)
 {
-    load_index_buffer = index;
+    load_vars.delay_loading = true;
+    load_vars.load_index = index;
+
+    int32_t data{};
+    switch (load_size)
+    {
+        case data_size::BYTE:
+        {
+            // data = mem(addr);
+            if (signedness == data_signedness::SIGNED)
+            {
+                data = static_cast<int8_t>(data);
+            }
+            break;
+        }
+        case data_size::HALF_WORD:
+        {
+            // data = mem(addr) | (mem(addr + 1) << 8);
+            if (signedness == data_signedness::SIGNED)
+            {
+                data = static_cast<int16_t>(data);
+            }
+            break;
+        }
+    }
+    load_vars.intermediate_load_data = data;
 }
 
-void cpu::prepare_delayed_load_unsigned(uint32_t addr, std::size_t index)
+void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
 {
-    load_index_buffer = index;
+    load_vars.delay_loading = true;
+    load_vars.load_index = index;
+
+    unsigned int num_bytes{4 - addr % 4};
+    uint32_t data{};
+    switch (segment)
+    {
+        case word_segment::LEFT:
+        {
+            if (!load_vars.special_load)
+            {
+                data = gprs[index] & (static_cast<uint64_t>(0xFFFFFFFF) >> (8 * num_bytes));
+            }
+            else
+            {
+                data = load_vars.intermediate_load_data;
+            }
+            data &= static_cast<uint64_t>(0xFFFFFFFF) >> (8 * num_bytes);
+
+            for (unsigned int i{}; i < num_bytes; ++i)
+            {
+                // data |= mem(addr + 3 - i) << (24 - (8 * i));
+            }
+        }
+        case word_segment::RIGHT:
+        {
+            if (!load_vars.special_load)
+            {
+                data = gprs[index] & (static_cast<uint64_t>(0xFFFFFFFF) << (8 * num_bytes));
+            }
+            else
+            {
+                data = load_vars.intermediate_load_data;
+            }
+            data &= static_cast<uint64_t>(0xFFFFFFFF) << (8 * num_bytes);
+
+            for (unsigned int i{}; i < num_bytes; ++i)
+            {
+                // data |= mem(addr + i) << (8 * i);
+            }
+        }
+    }
+    load_vars.intermediate_load_data = data;
+
+    load_vars.special_load = true;
+    load_vars.disable_special_load = false;
+}
+
+void cpu::prepare_load(uint32_t addr, std::size_t index)
+{
+    load_vars.delay_loading = true;
+    load_vars.load_index = index;
+
+    load_vars.intermediate_load_data = 0;
+    for (int i{}; i < 4; ++i)
+    {
+        // load_vars.intermediate_load_data |= mem(addr + i) << (8 * i);
+    }
+}
+
+void cpu::prepare_load_imm(uint32_t imm, std::size_t index)
+{
+    load_vars.delay_loading = true;
+    load_vars.load_index = index;
+    load_vars.load_data = imm;
 }
