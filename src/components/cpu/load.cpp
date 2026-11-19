@@ -1,20 +1,16 @@
 #include "components/ps1.h"
 #include "components/cpu.h"
 
-void cpu::load()
+void load_trigger(cpu_load_vars& load_vars, std::size_t index)
 {
-    bool no_write_override{!load_vars.write_occurred || load_vars.load_index != load_vars.written_index_priority};
-    if (load_vars.load_index != 0 && no_write_override)
-    {
-        gprs[load_vars.load_index] = load_vars.load_data;
-    }
-    load_vars.delay_loading = false;
+    load_vars.loading = true;
+    load_vars.disable_loading = false;
+    load_vars.load_index = index;
 }
 
 void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness)
 {
-    load_vars.delay_loading = true;
-    load_vars.load_index = index;
+    load_trigger(load_vars, index);
 
     int32_t data{};
     switch (load_size)
@@ -43,8 +39,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, da
 
 void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
 {
-    load_vars.delay_loading = true;
-    load_vars.load_index = index;
+    load_trigger(load_vars, index);
 
     unsigned int num_bytes{4 - addr % 4};
     uint32_t data{};
@@ -88,13 +83,11 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
     load_vars.intermediate_load_data = data;
 
     load_vars.special_load = true;
-    load_vars.disable_special_load = false;
 }
 
 void cpu::prepare_load(uint32_t addr, std::size_t index)
 {
-    load_vars.delay_loading = true;
-    load_vars.load_index = index;
+    load_trigger(load_vars, index);
 
     load_vars.intermediate_load_data = 0;
     for (int i{}; i < 4; ++i)
@@ -105,7 +98,6 @@ void cpu::prepare_load(uint32_t addr, std::size_t index)
 
 void cpu::prepare_load_imm(uint32_t imm, std::size_t index)
 {
-    load_vars.delay_loading = true;
-    load_vars.load_index = index;
+    load_trigger(load_vars, index);
     load_vars.load_data = imm;
 }

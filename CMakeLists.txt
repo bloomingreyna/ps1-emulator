@@ -7,11 +7,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(blps1
     src/main.cpp
     src/components/cpu/tick.cpp
+    src/components/cpu/pc_change.cpp
     src/components/cpu/load.cpp
     src/components/cpu/reg_getters.cpp
     src/components/cpu/reg_setters.cpp
+    src/components/system/memory_accesses.cpp
     src/instructions/opcode.cpp
-    src/instructions/special_dispatch.cpp
     src/instructions/add.cpp
     src/instructions/bitwise.cpp
     src/instructions/branch.cpp
@@ -20,6 +21,7 @@ add_executable(blps1
     src/instructions/move.cpp
     src/instructions/multiply.cpp
     src/instructions/set_on.cpp
+    src/instructions/special_dispatch.cpp
 )
 
 target_include_directories(blps1 PRIVATE include)
