@@ -1,3 +1,4 @@
+#include "components/ps1.h"
 #include "components/cpu.h"
 
 void cpu::load()
@@ -20,7 +21,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, da
     {
         case data_size::BYTE:
         {
-            // data = mem(addr);
+            data = system.read_memory(addr);
             if (signedness == data_signedness::SIGNED)
             {
                 data = static_cast<int8_t>(data);
@@ -29,7 +30,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, da
         }
         case data_size::HALF_WORD:
         {
-            // data = mem(addr) | (mem(addr + 1) << 8);
+            data = system.read_memory(addr) | (system.read_memory(addr + 1) << 8);
             if (signedness == data_signedness::SIGNED)
             {
                 data = static_cast<int16_t>(data);
@@ -63,7 +64,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
 
             for (unsigned int i{}; i < num_bytes; ++i)
             {
-                // data |= mem(addr + 3 - i) << (24 - (8 * i));
+                data |= system.read_memory(addr + 3 - i) << (24 - (8 * i));
             }
         }
         case word_segment::RIGHT:
@@ -80,7 +81,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
 
             for (unsigned int i{}; i < num_bytes; ++i)
             {
-                // data |= mem(addr + i) << (8 * i);
+                data |= system.read_memory(addr + i) << (8 * i);
             }
         }
     }
@@ -98,7 +99,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index)
     load_vars.intermediate_load_data = 0;
     for (int i{}; i < 4; ++i)
     {
-        // load_vars.intermediate_load_data |= mem(addr + i) << (8 * i);
+        load_vars.intermediate_load_data |= system.read_memory(addr + i) << (8 * i);
     }
 }
 

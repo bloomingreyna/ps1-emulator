@@ -1,6 +1,6 @@
 #include "components/cpu.h"
 
-void cpu::execute_instruction()
+void cpu::tick()
 {
     // Execution...
     if (load_vars.disable_special_load)

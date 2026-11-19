@@ -21,12 +21,14 @@ enum class word_segment
     LEFT, RIGHT
 };
 
-class opcode;
+class ps1;
 
 class cpu
 {
 public:
-    void execute_instruction();
+    cpu();
+
+    void tick();
 
     void load();
     void prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness);
@@ -44,6 +46,8 @@ public:
     void set_hi(uint32_t value);
     void set_lo(uint32_t value);
 private:
+    ps1& system;
+
     std::array<uint32_t, 32> gprs{};
     uint32_t pc{};
     uint32_t hi{};
