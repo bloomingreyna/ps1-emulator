@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "components/ps1.h"
 #include "components/cpu.h"
 
@@ -32,6 +34,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, da
             }
             break;
         }
+        default: { throw std::invalid_argument("Cannot use data_size::WORD; use dedicated function prepare_load_word instead."); }
     }
     load_vars.intermediate_load_data = data;
 }
@@ -48,7 +51,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
         {
             if (!load_vars.special_load)
             {
-                data = gprs[index] & (static_cast<uint64_t>(0xFFFFFFFF) >> (8 * num_bytes));
+                data = gprs[index];
             }
             else
             {
@@ -60,12 +63,13 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
             {
                 data |= system.read_memory(addr + 3 - i) << (24 - (8 * i));
             }
+            break;
         }
         case word_segment::RIGHT:
         {
             if (!load_vars.special_load)
             {
-                data = gprs[index] & (static_cast<uint64_t>(0xFFFFFFFF) << (8 * num_bytes));
+                data = gprs[index];
             }
             else
             {
@@ -77,6 +81,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
             {
                 data |= system.read_memory(addr + i) << (8 * i);
             }
+            break;
         }
     }
     load_vars.intermediate_load_data = data;
@@ -84,7 +89,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
     load_vars.special_load = true;
 }
 
-void cpu::prepare_load(uint32_t addr, std::size_t index)
+void cpu::prepare_load_word(uint32_t addr, std::size_t index)
 {
     load_trigger(load_vars, index);
 

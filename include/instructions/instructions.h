@@ -60,6 +60,12 @@ void or_reg(cpu& c, opcode o);
 void or_imm(cpu& c, opcode o);
 
 // TODO: Store
+void store_byte(cpu& c, opcode o);
+void store_halfword(cpu& c, opcode o);
+void store_word(cpu& c, opcode o);
+void store_word_from_coprocessor(cpu& c, opcode o);
+void store_word_left(cpu& c, opcode o);
+void store_word_right(cpu& c, opcode o);
 
 void shift_word_left_logical(cpu& c, opcode o);
 void shift_word_left_logical_var(cpu& c, opcode o);
@@ -74,7 +80,7 @@ void shift_word_right_arithmetic_var(cpu& c, opcode o);
 void shift_word_right_logical(cpu& c, opcode o);
 void shift_word_right_logical_var(cpu& c, opcode o);
 
-// TODO: Store, subtract
+// TODO: Subtract
 
 void exclusive_or(cpu& c, opcode o);
 void exclusive_or_imm(cpu& c, opcode o);

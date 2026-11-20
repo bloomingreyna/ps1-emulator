@@ -9,6 +9,7 @@ add_executable(blps1
     src/components/cpu/tick.cpp
     src/components/cpu/pc_change.cpp
     src/components/cpu/load.cpp
+    src/components/cpu/store.cpp
     src/components/cpu/reg_getters.cpp
     src/components/cpu/reg_setters.cpp
     src/components/system/memory_accesses.cpp
@@ -23,6 +24,7 @@ add_executable(blps1
     src/instructions/multiply.cpp
     src/instructions/set_on.cpp
     src/instructions/special_dispatch.cpp
+    src/instructions/store.cpp
 )
 
 target_include_directories(blps1 PRIVATE include)

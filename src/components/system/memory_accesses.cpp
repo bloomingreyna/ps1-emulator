@@ -20,3 +20,8 @@ uint8_t ps1::read_memory(uint32_t addr)
     }
     return 0;
 }
+
+void ps1::write_memory(uint32_t addr, uint8_t value)
+{
+
+}

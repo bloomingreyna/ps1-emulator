@@ -8,7 +8,7 @@
 
 enum class data_size
 {
-    BYTE, HALF_WORD
+    BYTE, HALF_WORD, WORD
 };
 
 enum class data_signedness
@@ -35,8 +35,11 @@ public:
 
     void prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness);
     void prepare_load(uint32_t addr, std::size_t index, word_segment segment);
-    void prepare_load(uint32_t addr, std::size_t index);
+    void prepare_load_word(uint32_t addr, std::size_t index);
     void prepare_load_imm(uint32_t value, std::size_t index);
+
+    void store(uint32_t addr, uint32_t value, data_size store_size);
+    void store(uint32_t addr, uint32_t value, word_segment segment);
 
     void prepare_branch(int32_t offset);
     void prepare_jump(uint32_t addr);

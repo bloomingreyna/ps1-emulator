@@ -33,8 +33,6 @@ void load_halfword_unsigned(cpu& c, opcode o)
 
 void load_upper_immediate(cpu& c, opcode o)
 {
-    uint32_t base{c.get_gpr(o.base_addr())};
-    int32_t offset{static_cast<int16_t>(o.offset())};
     c.prepare_load_imm(o.immediate() << 16, o.target_reg());
 }
 
@@ -42,7 +40,7 @@ void load_word(cpu& c, opcode o)
 {
     uint32_t base{c.get_gpr(o.base_addr())};
     int32_t offset{static_cast<int16_t>(o.offset())};
-    c.prepare_load(base + offset, o.target_reg());
+    c.prepare_load_word(base + offset, o.target_reg());
 }
 
 // TODO
