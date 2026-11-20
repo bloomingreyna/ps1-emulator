@@ -42,7 +42,6 @@ void load_word_to_coprocessor(cpu& c, opcode o);
 void load_word_left(cpu& c, opcode o);
 void load_word_right(cpu& c, opcode o);
 
-
 void move_from_hi(cpu& c, opcode o);
 void move_from_lo(cpu& c, opcode o);
 
@@ -81,6 +80,8 @@ void shift_word_right_logical(cpu& c, opcode o);
 void shift_word_right_logical_var(cpu& c, opcode o);
 
 // TODO: Subtract
+void subtract_word(cpu& c, opcode o);
+void subtract_uword(cpu& c, opcode o);
 
 void exclusive_or(cpu& c, opcode o);
 void exclusive_or_imm(cpu& c, opcode o);

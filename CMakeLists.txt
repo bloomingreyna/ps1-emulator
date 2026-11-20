@@ -25,6 +25,7 @@ add_executable(blps1
     src/instructions/set_on.cpp
     src/instructions/special_dispatch.cpp
     src/instructions/store.cpp
+    src/instructions/subtract.cpp
 )
 
 target_include_directories(blps1 PRIVATE include)

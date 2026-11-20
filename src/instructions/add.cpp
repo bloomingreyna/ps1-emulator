@@ -4,8 +4,8 @@
 
 void add_word(cpu& c, opcode o)
 {
-    int32_t src{static_cast<int32_t>(c.get_gpr(o.src_reg()))};
-    int32_t target{static_cast<int32_t>(c.get_gpr(o.target_reg()))};
+    int64_t src{c.get_gpr(o.src_reg())};
+    int64_t target{c.get_gpr(o.target_reg())};
     c.set_gpr(o.dest_reg(), src + target);
 }
 
