@@ -3,28 +3,34 @@
 void cpu::tick()
 {
     tick_fetch();
+    tick_load_trigger();
     // Execution
 
     tick_load();
-    tick_pc_change();
 }
 
 void cpu::tick_fetch()
 {
-    pc++;
-    if (pc_change_vars.changing_pc && pc_change_vars.finish_changing_pc)
+    pc += 4;
+    if (pc_change_vars.changing_pc)
     {
         pc = pc_change_vars.new_pc;
-        if (pc_change_vars.disable_changing_pc)
-        {
-            pc_change_vars.changing_pc = false;
-        }
+        pc_change_vars.changing_pc = false;
+    }
+}
+
+void cpu::tick_load_trigger()
+{
+    if (load_vars.trigger_load)
+    {
+        load_vars.loading = true;
+        load_vars.trigger_load = false;
     }
 }
 
 void cpu::tick_load()
 {
-    if (load_vars.loading && load_vars.finish_loading)
+    if (load_vars.loading)
     {
         bool no_write_override{
             !load_vars.write_occurred ||
@@ -36,27 +42,19 @@ void cpu::tick_load()
             gprs[load_vars.load_index] = load_vars.load_data;
         }
 
-        if (load_vars.disable_loading)
-        {
-            load_vars.loading = false;
-        }
-
         if (load_vars.disable_special_load)
         {
             load_vars.special_load = false;
         }
+
+        load_vars.loading = false;
     }
     load_vars.load_data = load_vars.intermediate_load_data;
 
-    load_vars.finish_loading = load_vars.loading;
-    load_vars.disable_loading = load_vars.loading;
-    load_vars.disable_special_load = load_vars.special_load;
+    if (load_vars.special_load)
+    {
+        load_vars.disable_special_load = true;
+    }
 
     load_vars.write_occurred = false;
-}
-
-void cpu::tick_pc_change()
-{
-    pc_change_vars.finish_changing_pc = pc_change_vars.changing_pc;
-    pc_change_vars.disable_changing_pc = pc_change_vars.changing_pc;
 }

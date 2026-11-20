@@ -9,8 +9,7 @@ struct cpu_load_vars
     std::size_t load_index{};
 
     bool loading{false};
-    bool finish_loading{false};
-    bool disable_loading{false};
+    bool trigger_load{false};
 
     bool special_load{false};
     bool disable_special_load{false};
@@ -23,6 +22,4 @@ struct cpu_pc_change_vars
 {
     uint32_t new_pc{};
     bool changing_pc{false};
-    bool finish_changing_pc{false};
-    bool disable_changing_pc{false};
 };

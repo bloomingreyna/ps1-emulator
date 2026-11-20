@@ -30,8 +30,8 @@ public:
 
     void tick();
     void tick_fetch();
+    void tick_load_trigger();
     void tick_load();
-    void tick_pc_change();
 
     void prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness);
     void prepare_load(uint32_t addr, std::size_t index, word_segment segment);
@@ -39,6 +39,7 @@ public:
     void prepare_load_imm(uint32_t value, std::size_t index);
 
     void prepare_branch(int32_t offset);
+    void prepare_jump(uint32_t addr);
 
     uint32_t get_gpr(std::size_t index) const;
     uint32_t get_pc() const;

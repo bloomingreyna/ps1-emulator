@@ -17,6 +17,7 @@ add_executable(blps1
     src/instructions/bitwise.cpp
     src/instructions/branch.cpp
     src/instructions/divide.cpp
+    src/instructions/jump.cpp
     src/instructions/load.cpp
     src/instructions/move.cpp
     src/instructions/multiply.cpp

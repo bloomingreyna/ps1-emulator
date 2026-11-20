@@ -13,7 +13,6 @@ void add_uword(cpu& c, opcode o);
 void and_reg(cpu& c, opcode o);
 void and_imm(cpu& c, opcode o);
 
-// TODO
 void branch_equal(cpu& c, opcode o);
 void branch_greater_equal_zero(cpu& c, opcode o);
 void branch_greater_equal_zero_link(cpu& c, opcode o);
@@ -29,6 +28,9 @@ void divide_word(cpu& c, opcode o);
 void divide_uword(cpu& c, opcode o);
 
 // TODO: Jump instructions
+void jump(cpu& c, opcode o);
+void jump_and_link(cpu& c, opcode o);
+void jump_and_link_register(cpu& c, opcode o);
 
 void load_byte_signed(cpu& c, opcode o);
 void load_byte_unsigned(cpu& c, opcode o);

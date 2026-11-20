@@ -3,8 +3,7 @@
 
 void load_trigger(cpu_load_vars& load_vars, std::size_t index)
 {
-    load_vars.loading = true;
-    load_vars.disable_loading = false;
+    load_vars.trigger_load = true;
     load_vars.load_index = index;
 }
 
