@@ -4,9 +4,12 @@ project(ps1-emu)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_CXX_STANDARD 23)
+
 add_executable(blps1
     src/main.cpp
     src/components/cpu/tick.cpp
+    src/components/cpu/throw_exception.cpp
     src/components/cpu/pc_change.cpp
     src/components/cpu/load.cpp
     src/components/cpu/store.cpp
@@ -26,6 +29,7 @@ add_executable(blps1
     src/instructions/special_dispatch.cpp
     src/instructions/store.cpp
     src/instructions/subtract.cpp
+    src/utils/exceptions.cpp
 )
 
 target_include_directories(blps1 PRIVATE include)

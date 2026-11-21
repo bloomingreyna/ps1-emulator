@@ -27,7 +27,6 @@ void branch_not_equal(cpu& c, opcode o);
 void divide_word(cpu& c, opcode o);
 void divide_uword(cpu& c, opcode o);
 
-// TODO: Jump instructions
 void jump(cpu& c, opcode o);
 void jump_and_link(cpu& c, opcode o);
 void jump_and_link_register(cpu& c, opcode o);
@@ -58,7 +57,6 @@ void nor_reg(cpu& c, opcode o);
 void or_reg(cpu& c, opcode o);
 void or_imm(cpu& c, opcode o);
 
-// TODO: Store
 void store_byte(cpu& c, opcode o);
 void store_halfword(cpu& c, opcode o);
 void store_word(cpu& c, opcode o);
@@ -79,7 +77,6 @@ void shift_word_right_arithmetic_var(cpu& c, opcode o);
 void shift_word_right_logical(cpu& c, opcode o);
 void shift_word_right_logical_var(cpu& c, opcode o);
 
-// TODO: Subtract
 void subtract_word(cpu& c, opcode o);
 void subtract_uword(cpu& c, opcode o);
 
