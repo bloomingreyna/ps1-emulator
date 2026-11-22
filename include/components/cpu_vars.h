@@ -21,5 +21,6 @@ struct cpu_load_vars
 struct cpu_pc_change_vars
 {
     uint32_t new_pc{};
+    uint32_t intermediate_new_pc{};
     bool changing_pc{false};
 };

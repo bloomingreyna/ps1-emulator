@@ -5,7 +5,7 @@
 #include <array>
 #include <cstdint>
 
-enum class sysctlproc_register
+enum class sysctlproc_register : std::size_t
 {
     INDX = 0,
     RAND = 1,
@@ -23,6 +23,23 @@ enum class sysctlproc_register
     CAUSE = 13,
     EPC = 14,
     PRID = 15
+};
+
+enum class exception_type
+{
+    INT = 0,
+    MOD = 1,
+    TLBL = 2,
+    TLBS = 3,
+    ADEL = 4,
+    ADES = 5,
+    IBE = 6,
+    DBE = 7,
+    SYSCALL = 8,
+    BP = 9,
+    RI = 10,
+    CPU = 11,
+    OV = 12
 };
 
 class system_control_processor

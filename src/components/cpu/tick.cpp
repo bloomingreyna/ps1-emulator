@@ -4,18 +4,23 @@ void cpu::tick()
 {
     tick_fetch();
     tick_load_trigger();
+
     // Execution
 
+    tick_pc_change();
     tick_load();
 }
 
 void cpu::tick_fetch()
 {
-    pc += 4;
     if (pc_change_vars.changing_pc)
     {
-        pc = pc_change_vars.new_pc;
+        pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
         pc_change_vars.changing_pc = false;
+    }
+    else
+    {
+        pc_change_vars.new_pc = pc + 4;
     }
 }
 
@@ -26,6 +31,11 @@ void cpu::tick_load_trigger()
         load_vars.loading = true;
         load_vars.trigger_load = false;
     }
+}
+
+void cpu::tick_pc_change()
+{
+    pc = pc_change_vars.new_pc;
 }
 
 void cpu::tick_load()

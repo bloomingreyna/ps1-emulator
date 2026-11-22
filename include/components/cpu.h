@@ -30,10 +30,11 @@ public:
 
     void tick();
     void tick_fetch();
+    void tick_pc_change();
     void tick_load_trigger();
     void tick_load();
 
-    void throw_exception();
+    void throw_exception(exception_type e);
 
     void prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness);
     void prepare_load(uint32_t addr, std::size_t index, word_segment segment);

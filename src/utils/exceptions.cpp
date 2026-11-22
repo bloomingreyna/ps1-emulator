@@ -14,3 +14,8 @@ bool alignment_error(uint32_t addr, data_size alignment)
 {
 
 }
+
+bool bus_error(uint32_t addr)
+{
+
+}
