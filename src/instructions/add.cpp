@@ -1,4 +1,3 @@
-#include "components/system_control_processor.h"
 #include "instructions/instructions.h"
 #include "utils/exceptions.h"
 

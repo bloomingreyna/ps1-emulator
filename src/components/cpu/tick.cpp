@@ -1,14 +1,22 @@
 #include "components/cpu.h"
+#include "utils/cpu_enums.h"
+#include "utils/exceptions.h"
+#include "utils/sysctlproc_enums.h"
 
 void cpu::tick()
 {
     tick_fetch();
     tick_load_trigger();
 
-    // Execution
+    if (!exception_thrown)
+    {
+        // Execution
+    }
 
     tick_pc_change();
     tick_load();
+
+    exception_thrown = false;
 }
 
 void cpu::tick_fetch()
@@ -19,7 +27,14 @@ void cpu::tick_fetch()
     }
     else
     {
-        pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
+        if (!alignment_error(pc_change_vars.intermediate_new_pc, data_size::WORD))
+        {
+            pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
+        }
+        else
+        {
+            throw_exception(exception_type::ADEL);
+        }
         pc_change_vars.changing_pc = false;
     }
 }

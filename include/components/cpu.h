@@ -46,14 +46,15 @@ private:
     void tick_load();
 
     ps1& system;
+    sysctlproc scp{};
 
     std::array<uint32_t, 32> gprs{};
     uint32_t pc{};
     uint32_t hi{};
     uint32_t lo{};
 
-    sysctlproc scp{};
-
     cpu_load_vars load_vars{};
     cpu_pc_change_vars pc_change_vars{};
+
+    bool exception_thrown{false};
 };

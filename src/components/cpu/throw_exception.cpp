@@ -4,6 +4,8 @@
 
 void cpu::throw_exception(exception_type e)
 {
+    exception_thrown = true;
+
     if (pc_change_vars.changing_pc)
     {
         scp.set_cr(static_cast<std::size_t>(ctl_reg::EPC), pc - 4);

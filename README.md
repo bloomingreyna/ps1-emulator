@@ -1,1 +1,7 @@
-Hello everyone :33!! This is my ps1 emulator >_<!!!! I worked really hard on it...please rate my work <333!! Anyways (owO) planning to play resident evil with my girlfriend (yes i am yuri UwU) so i'm SUPEERRR excited! More people should really make emulators, it's an experience alright! Anyways P-P BloomingQUEENReyna out! Until next time my kitties <3333!!!
+# BloomStation
+
+Welcome, one and all, to my totally awesome emulator for the original PlayStation! Aptly titled after the username of yours truly, this is a project meant to fulfill my as-of-now unmet desires of playing games from way before my time. Sure, I could just install one of the many emulators that are already out there, but where's the fun in that? :P
+
+This will be a step up from a Game Boy emulator I had made previously—most notably, it will be my first time working with 3-D graphics. Hopefully everything renders fine! If it doesn't... I mean, I guess that'd be kinda funny.
+
+More to come soon!
