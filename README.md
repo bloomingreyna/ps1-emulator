@@ -1,0 +1,1 @@
+Hello everyone :33!! This is my ps1 emulator >_<!!!! I worked really hard on it...please rate my work <333!! Anyways (owO) planning to play resident evil with my girlfriend (yes i am yuri UwU) so i'm SUPEERRR excited! More people should really make emulators, it's an experience alright! Anyways P-P BloomingQUEENReyna out! Until next time my kitties <3333!!!
