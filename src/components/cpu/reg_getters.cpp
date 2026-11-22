@@ -1,11 +1,9 @@
-#include <cassert>
 #include <cstdint>
 
 #include "components/cpu.h"
 
 uint32_t cpu::get_gpr(std::size_t index) const
 {
-    assert(index < 32);
     if (index == 0)
     {
         return 0;

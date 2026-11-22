@@ -5,48 +5,13 @@
 #include <array>
 #include <cstdint>
 
-enum class sysctlproc_register : std::size_t
-{
-    INDX = 0,
-    RAND = 1,
-    TLBL = 2,
-    BPC = 3,
-    CTXT = 4,
-    BDA = 5,
-    PIDMASK = 6,
-    DCIC = 7,
-    BADV = 8,
-    BDAM = 9,
-    TLBH = 10,
-    BPCM = 11,
-    SR = 12,
-    CAUSE = 13,
-    EPC = 14,
-    PRID = 15
-};
-
-enum class exception_type
-{
-    INT = 0,
-    MOD = 1,
-    TLBL = 2,
-    TLBS = 3,
-    ADEL = 4,
-    ADES = 5,
-    IBE = 6,
-    DBE = 7,
-    SYSCALL = 8,
-    BP = 9,
-    RI = 10,
-    CPU = 11,
-    OV = 12
-};
-
-class system_control_processor
+class sysctlproc
 {
 public:
     uint32_t get_cr(std::size_t index) const;
-    uint32_t set_cr(std::size_t index, uint32_t value);
+    void set_cr(std::size_t index, uint32_t value);
+
+    bool get_bev() const;
 private:
-    std::array<uint32_t, 32> control_registers{};
+    std::array<uint32_t, 32> ctl_regs{};
 };

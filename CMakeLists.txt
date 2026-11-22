@@ -15,6 +15,8 @@ add_executable(blps1
     src/components/cpu/store.cpp
     src/components/cpu/reg_getters.cpp
     src/components/cpu/reg_setters.cpp
+    src/components/system_control_processor/control_registers.cpp
+    src/components/system_control_processor/status_register.cpp
     src/components/system/memory_accesses.cpp
     src/instructions/opcode.cpp
     src/instructions/add.cpp

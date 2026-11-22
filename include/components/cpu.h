@@ -5,21 +5,8 @@
 
 #include "components/cpu_vars.h"
 #include "components/system_control_processor.h"
-
-enum class data_size
-{
-    BYTE, HALF_WORD, WORD
-};
-
-enum class data_signedness
-{
-    SIGNED, UNSIGNED
-};
-
-enum class word_segment
-{
-    LEFT, RIGHT
-};
+#include "utils/cpu_enums.h"
+#include "utils/sysctlproc_enums.h"
 
 class ps1;
 
@@ -29,10 +16,6 @@ public:
     cpu();
 
     void tick();
-    void tick_fetch();
-    void tick_pc_change();
-    void tick_load_trigger();
-    void tick_load();
 
     void throw_exception(exception_type e);
 
@@ -57,6 +40,11 @@ public:
     void set_hi(uint32_t value);
     void set_lo(uint32_t value);
 private:
+    void tick_fetch();
+    void tick_pc_change();
+    void tick_load_trigger();
+    void tick_load();
+
     ps1& system;
 
     std::array<uint32_t, 32> gprs{};
@@ -64,7 +52,7 @@ private:
     uint32_t hi{};
     uint32_t lo{};
 
-    system_control_processor sysctlproc{};
+    sysctlproc scp{};
 
     cpu_load_vars load_vars{};
     cpu_pc_change_vars pc_change_vars{};

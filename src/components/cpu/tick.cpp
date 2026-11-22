@@ -13,14 +13,14 @@ void cpu::tick()
 
 void cpu::tick_fetch()
 {
-    if (pc_change_vars.changing_pc)
+    if (!pc_change_vars.changing_pc)
     {
-        pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
-        pc_change_vars.changing_pc = false;
+        pc_change_vars.new_pc = pc + 4;
     }
     else
     {
-        pc_change_vars.new_pc = pc + 4;
+        pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
+        pc_change_vars.changing_pc = false;
     }
 }
 
