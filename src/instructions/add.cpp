@@ -1,8 +1,6 @@
 #include "instructions/instructions.h"
 #include "utils/exceptions.h"
 
-// TODO: Exception handling for signed addition
-
 void add_word(cpu& c, opcode o)
 {
     uint32_t src{c.get_gpr(o.src_reg())};

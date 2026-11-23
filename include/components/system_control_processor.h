@@ -1,5 +1,3 @@
-// TODO
-
 #pragma once
 
 #include <array>

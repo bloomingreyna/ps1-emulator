@@ -1,5 +1,3 @@
-// TODO: Exception handling
-
 #include "components/cpu.h"
 #include "instructions/instructions.h"
 

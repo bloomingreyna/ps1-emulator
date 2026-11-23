@@ -18,11 +18,15 @@ void branch_greater_equal_zero(cpu& c, opcode o);
 void branch_greater_equal_zero_link(cpu& c, opcode o);
 void branch_greater_zero(cpu& c, opcode o);
 void branch_less_equal_zero(cpu& c, opcode o);
-void branch_less_zero(cpu&c, opcode o);
+void branch_less_zero(cpu& c, opcode o);
 void branch_less_zero_link(cpu& c, opcode o);
 void branch_not_equal(cpu& c, opcode o);
 
-// TODO: BREAK and coprocessor stuff
+void breakpoint(cpu& c, opcode o);
+
+void move_control_from_coprocessor(cpu& c, opcode o);
+void coprocessor_operation(cpu& c, opcode o);
+void move_control_to_coprocessor(cpu& c, opcode o);
 
 void divide_word(cpu& c, opcode o);
 void divide_uword(cpu& c, opcode o);
@@ -41,11 +45,10 @@ void load_word_to_coprocessor(cpu& c, opcode o);
 void load_word_left(cpu& c, opcode o);
 void load_word_right(cpu& c, opcode o);
 
+void move_from_coprocessor(cpu& c, opcode o);
 void move_from_hi(cpu& c, opcode o);
 void move_from_lo(cpu& c, opcode o);
-
-// TODO: Coprocessor stuff
-
+void move_to_coprocessor(cpu& c, opcode o);
 void move_to_hi(cpu& c, opcode o);
 void move_to_lo(cpu& c, opcode o);
 
@@ -79,6 +82,8 @@ void shift_word_right_logical_var(cpu& c, opcode o);
 
 void subtract_word(cpu& c, opcode o);
 void subtract_uword(cpu& c, opcode o);
+
+void system_call(cpu& c, opcode o);
 
 void exclusive_or(cpu& c, opcode o);
 void exclusive_or_imm(cpu& c, opcode o);

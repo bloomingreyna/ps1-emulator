@@ -1,5 +1,3 @@
-// TODO: Exceptions
-
 #include "components/cpu.h"
 #include "instructions/instructions.h"
 
@@ -27,6 +25,7 @@ void store_word(cpu& c, opcode o)
     c.store(base + offset, target, data_size::WORD);
 }
 
+// TODO
 void store_word_from_coprocessor(cpu& c, opcode o)
 {
 
