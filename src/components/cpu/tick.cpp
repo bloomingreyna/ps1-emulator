@@ -11,12 +11,16 @@ void cpu::tick()
     if (!exception_thrown)
     {
         // Execution
+
+        pc = pc_change_vars.new_pc;
+    }
+    else
+    {
+        jump_to_exception_vec();
+        exception_thrown = false;
     }
 
-    tick_pc_change();
     tick_load();
-
-    exception_thrown = false;
 }
 
 void cpu::tick_fetch()
@@ -46,11 +50,6 @@ void cpu::tick_load_trigger()
         load_vars.loading = true;
         load_vars.trigger_load = false;
     }
-}
-
-void cpu::tick_pc_change()
-{
-    pc = pc_change_vars.new_pc;
 }
 
 void cpu::tick_load()

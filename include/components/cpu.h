@@ -41,7 +41,7 @@ public:
     void set_lo(uint32_t value);
 private:
     void tick_fetch();
-    void tick_pc_change();
+    void jump_to_exception_vec();
     void tick_load_trigger();
     void tick_load();
 

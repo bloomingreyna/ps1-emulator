@@ -16,7 +16,10 @@ void cpu::throw_exception(exception_type e)
     }
 
     scp.set_cr(static_cast<std::size_t>(ctl_reg::CAUSE), static_cast<uint32_t>(e));
+}
 
+void cpu::jump_to_exception_vec()
+{
     if (!scp.get_bev())
     {
         pc_change_vars.new_pc = 0x80000000;
