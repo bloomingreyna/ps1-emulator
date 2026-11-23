@@ -3,7 +3,7 @@
 #include "components/ps1.h"
 #include "components/cpu.h"
 
-void load_trigger(cpu_load_vars& load_vars, std::size_t index)
+void load_trigger_helper(cpu_load_vars& load_vars, std::size_t index)
 {
     load_vars.trigger_load = true;
     load_vars.load_index = index;
@@ -11,7 +11,7 @@ void load_trigger(cpu_load_vars& load_vars, std::size_t index)
 
 void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness)
 {
-    load_trigger(load_vars, index);
+    load_trigger_helper(load_vars, index);
 
     int32_t data{};
     switch (load_size)
@@ -41,7 +41,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, da
 
 void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
 {
-    load_trigger(load_vars, index);
+    load_trigger_helper(load_vars, index);
 
     unsigned int num_bytes{4 - addr % 4};
     uint32_t data{};
@@ -91,7 +91,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
 
 void cpu::prepare_load_word(uint32_t addr, std::size_t index)
 {
-    load_trigger(load_vars, index);
+    load_trigger_helper(load_vars, index);
 
     load_vars.intermediate_load_data = 0;
     for (int i{}; i < 4; ++i)
@@ -102,6 +102,6 @@ void cpu::prepare_load_word(uint32_t addr, std::size_t index)
 
 void cpu::prepare_load_imm(uint32_t imm, std::size_t index)
 {
-    load_trigger(load_vars, index);
+    load_trigger_helper(load_vars, index);
     load_vars.load_data = imm;
 }

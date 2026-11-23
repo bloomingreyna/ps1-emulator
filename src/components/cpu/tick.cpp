@@ -5,25 +5,24 @@
 
 void cpu::tick()
 {
-    tick_fetch();
-    tick_load_trigger();
+    fetch();
+    load_trigger();
 
     if (!exception_thrown)
     {
-        // Execution
-
-        pc = pc_change_vars.new_pc;
+        execute();
     }
     else
     {
         jump_to_exception_vec();
         exception_thrown = false;
     }
+    pc = pc_change_vars.new_pc;
 
-    tick_load();
+    load_logic();
 }
 
-void cpu::tick_fetch()
+void cpu::fetch()
 {
     if (!pc_change_vars.changing_pc)
     {
@@ -43,16 +42,22 @@ void cpu::tick_fetch()
     }
 }
 
-void cpu::tick_load_trigger()
+void cpu::execute()
+{
+
+}
+
+void cpu::load_trigger()
 {
     if (load_vars.trigger_load)
     {
         load_vars.loading = true;
+        load_vars.load_data = load_vars.intermediate_load_data;
         load_vars.trigger_load = false;
     }
 }
 
-void cpu::tick_load()
+void cpu::load_logic()
 {
     if (load_vars.loading)
     {
@@ -73,7 +78,6 @@ void cpu::tick_load()
 
         load_vars.loading = false;
     }
-    load_vars.load_data = load_vars.intermediate_load_data;
 
     if (load_vars.special_load)
     {

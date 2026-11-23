@@ -40,10 +40,11 @@ public:
     void set_hi(uint32_t value);
     void set_lo(uint32_t value);
 private:
-    void tick_fetch();
+    void fetch();
+    void execute();
     void jump_to_exception_vec();
-    void tick_load_trigger();
-    void tick_load();
+    void load_trigger();
+    void load_logic();
 
     ps1& system;
     sysctlproc scp{};
