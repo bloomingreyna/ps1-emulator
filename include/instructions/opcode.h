@@ -13,6 +13,7 @@ struct opcode
     uint32_t value{};
 
     uint32_t op() const;
+    uint32_t coprocessor() const;
     uint32_t src_reg() const;
     uint32_t target_reg() const;
     uint32_t immediate() const;

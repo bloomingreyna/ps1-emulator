@@ -1,5 +1,7 @@
 #include "components/cpu.h"
 #include "instructions/instructions.h"
+#include "utils/cpu_enums.h"
+#include "utils/sysctlproc_enums.h"
 
 void store_byte(cpu& c, opcode o)
 {
@@ -28,7 +30,25 @@ void store_word(cpu& c, opcode o)
 // TODO
 void store_word_from_coprocessor(cpu& c, opcode o)
 {
+    uint32_t target{};
+    switch (o.coprocessor())
+    {
+        case 0x00:
+        {
+            target = c.get_scp_cr(o.target_reg());
+            break;
+        }
+        case 0x11:
+        {
+            c.throw_exception(exception_type::RI);
+            return;
+        }
+    }
 
+    uint32_t base{c.get_gpr(o.base_addr())};
+    int32_t offset{static_cast<int16_t>(o.offset())};
+
+    c.store(base + offset, target, data_size::WORD);
 }
 
 void store_word_left(cpu& c, opcode o)

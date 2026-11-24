@@ -1,6 +1,7 @@
 #include "instructions/opcode.h"
 
 uint32_t opcode::op() const { return value >> 26; }
+uint32_t opcode::coprocessor() const { return (value & 0x0C000000) >> 26; }
 uint32_t opcode::src_reg() const { return (value >> 21) & 0x1F; }
 uint32_t opcode::target_reg() const { return (value >> 16) & 0x1F; }
 uint32_t opcode::immediate() const { return value & 0xFFFF; }

@@ -39,6 +39,9 @@ public:
     void set_pc(uint32_t value);
     void set_hi(uint32_t value);
     void set_lo(uint32_t value);
+
+    uint32_t get_scp_cr(std::size_t index) const;
+    void set_scp_cr(std::size_t index, uint32_t value);
 private:
     void fetch();
     void execute();

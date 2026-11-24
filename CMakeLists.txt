@@ -22,7 +22,7 @@ add_executable(blps1
     src/instructions/add.cpp
     src/instructions/bitwise.cpp
     src/instructions/branch.cpp
-    src/instructions/breakpoint.cpp
+    src/instructions/software_exceptions.cpp
     src/instructions/divide.cpp
     src/instructions/jump.cpp
     src/instructions/load.cpp

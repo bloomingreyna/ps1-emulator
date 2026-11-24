@@ -5,3 +5,8 @@ void breakpoint(cpu& c, opcode o)
 {
     c.throw_exception(exception_type::BP);
 }
+
+void system_call(cpu& c, opcode o)
+{
+    c.throw_exception(exception_type::SYSCALL);
+}

@@ -44,7 +44,8 @@ void load_word(cpu& c, opcode o)
 // TODO
 void load_word_to_coprocessor(cpu& c, opcode o)
 {
-
+    uint32_t base{c.get_gpr(o.base_addr())};
+    int32_t offset{static_cast<int16_t>(o.offset())};
 }
 
 void load_word_left(cpu& c, opcode o)
