@@ -14,3 +14,8 @@ enum class word_segment
 {
     LEFT, RIGHT
 };
+
+enum class load_target
+{
+    CPU, COPROCESSOR
+};

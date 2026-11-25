@@ -2,18 +2,27 @@
 
 #include "components/ps1.h"
 #include "components/cpu.h"
+#include "utils/cpu_enums.h"
+#include "utils/exceptions.h"
+#include "utils/sysctlproc_enums.h"
 
 void cpu::finalize_load_operation(std::size_t index)
 {
     if (!exception_thrown)
     {
         load_vars.trigger_load = true;
-        load_vars.load_index = index;
+        load_vars.intermediate_load_index = index;
     }
 }
 
 void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness)
 {
+    if (alignment_error(addr, load_size))
+    {
+        throw_exception(exception_type::ADEL);
+        return;
+    }
+
     int32_t data{};
     switch (load_size)
     {
@@ -93,6 +102,12 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
 
 void cpu::prepare_load_word(uint32_t addr, std::size_t index)
 {
+    if (alignment_error(addr, data_size::WORD))
+    {
+        throw_exception(exception_type::ADEL);
+        return;
+    }
+
     load_vars.intermediate_load_data = 0;
     for (int i{}; i < 4; ++i)
     {

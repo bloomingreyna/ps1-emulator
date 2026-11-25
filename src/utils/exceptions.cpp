@@ -27,4 +27,5 @@ bool alignment_error(uint32_t addr, data_size alignment)
             return (addr & 0b11) != 0;
         }
     }
+    return false;
 }

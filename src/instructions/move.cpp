@@ -4,7 +4,7 @@ void move_from_coprocessor(cpu& c, opcode o)
 {
     switch (o.coprocessor())
     {
-        case 0x00:
+        case 0:
         {
             uint32_t dest{c.get_scp_cr(o.dest_reg())};
             c.set_gpr(o.target_reg(), dest);
@@ -28,7 +28,7 @@ void move_to_coprocessor(cpu& c, opcode o)
     uint32_t target{c.get_gpr(o.target_reg())};
     switch (o.coprocessor())
     {
-        case 0x00:
+        case 0:
         {
             c.set_scp_cr(o.dest_reg(), target);
             break;

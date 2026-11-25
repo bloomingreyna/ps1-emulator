@@ -13,13 +13,14 @@ void cpu::tick()
         executing = true;
         execute();
         executing = false;
+        pc = pc_change_vars.new_pc;
     }
     else
     {
         jump_to_exception_vec();
         exception_thrown = false;
+        return;
     }
-    pc = pc_change_vars.new_pc;
 
     load_logic();
 }
@@ -57,6 +58,7 @@ void cpu::load_trigger()
     {
         load_vars.loading = true;
         load_vars.load_data = load_vars.intermediate_load_data;
+        load_vars.load_index = load_vars.intermediate_load_index;
         load_vars.trigger_load = false;
     }
 }
@@ -65,21 +67,50 @@ void cpu::load_logic()
 {
     if (load_vars.loading)
     {
-        bool no_write_override{
-            !load_vars.write_occurred ||
-            load_vars.load_index != load_vars.written_index_priority
-        };
-
-        if (load_vars.load_index != 0 && no_write_override)
+        switch (load_vars.target)
         {
-            gprs[load_vars.load_index] = load_vars.load_data;
+            case load_target::CPU:
+            {
+                bool no_write_override{
+                    !load_vars.cpu_write_occurred ||
+                    load_vars.load_index != load_vars.written_index_priority
+                };
+
+                if (load_vars.load_index != 0 && no_write_override)
+                {
+                    gprs[load_vars.load_index] = load_vars.load_data;
+                }
+
+                break;
+            }
+            case load_target::COPROCESSOR:
+            {
+                bool no_write_override{
+                    !load_vars.coprocessor_write_occured ||
+                    load_vars.target_coprocessor != load_vars.written_coprocessor_priority ||
+                    load_vars.load_index != load_vars.written_index_priority
+                };
+
+                if (no_write_override)
+                {
+                    switch (load_vars.target_coprocessor)
+                    {
+                        case 0:
+                        {
+                            scp.set_cr(load_vars.load_index, load_vars.load_data);
+                            break;
+                        }
+                    }
+                }
+
+                break;
+            }
         }
 
         if (load_vars.disable_special_load)
         {
             load_vars.special_load = false;
         }
-
         load_vars.loading = false;
     }
 
@@ -88,5 +119,6 @@ void cpu::load_logic()
         load_vars.disable_special_load = true;
     }
 
-    load_vars.write_occurred = false;
+    load_vars.cpu_write_occurred = false;
+    load_vars.coprocessor_write_occured = false;
 }

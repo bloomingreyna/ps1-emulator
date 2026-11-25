@@ -18,12 +18,15 @@ uint8_t ps1::read_memory(uint32_t addr)
     {
         return system_ram[addr & 0x1FFFFFFF];
     }
-
     throw_bus_error_exception();
     return 0;
 }
 
 void ps1::write_memory(uint32_t addr, uint8_t value)
 {
-
+    if (in_user_memory(addr))
+    {
+        system_ram[addr & 0x1FFFFFFF] = value;
+    }
+    throw_bus_error_exception();
 }

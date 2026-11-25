@@ -28,4 +28,5 @@ void cpu::jump_to_exception_vec()
     {
         pc_change_vars.new_pc = 0xBFC00180;
     }
+    pc = pc_change_vars.new_pc;
 }

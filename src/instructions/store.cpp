@@ -33,14 +33,10 @@ void store_word_from_coprocessor(cpu& c, opcode o)
     uint32_t target{};
     switch (o.coprocessor())
     {
-        case 0x00:
+        case 0:
+        case 3:
         {
-            target = c.get_scp_cr(o.target_reg());
-            break;
-        }
-        case 0x11:
-        {
-            c.throw_exception(exception_type::RI);
+            c.throw_exception(exception_type::CPU);
             return;
         }
     }
