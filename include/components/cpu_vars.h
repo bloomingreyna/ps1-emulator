@@ -14,6 +14,7 @@ struct cpu_load_vars
 
     uint32_t intermediate_load_data{};
     uint32_t intermediate_load_index{};
+    load_target intermediate_target{};
 
     bool loading{false};
     bool trigger_load{false};

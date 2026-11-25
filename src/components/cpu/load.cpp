@@ -6,13 +6,14 @@
 #include "utils/exceptions.h"
 #include "utils/sysctlproc_enums.h"
 
-void cpu::finalize_load_operation(uint32_t data, std::size_t index, load_type ltype)
+void cpu::finalize_load_operation(uint32_t data, std::size_t index, load_type ltype, load_target target)
 {
     if (!exception_thrown)
     {
         load_vars.trigger_load = true;
         load_vars.intermediate_load_data = data;
         load_vars.intermediate_load_index = index;
+        load_vars.intermediate_target = target;
 
         if (ltype == load_type::SPECIAL)
         {
@@ -53,7 +54,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, da
         default: { throw std::invalid_argument("Cannot use data_size::WORD; use dedicated function prepare_load_word instead."); }
     }
 
-    finalize_load_operation(data, index, load_type::REGULAR);
+    finalize_load_operation(data, index, load_type::REGULAR, load_target::CPU);
 }
 
 void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
@@ -100,7 +101,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
         }
     }
 
-    finalize_load_operation(data, index, load_type::SPECIAL);
+    finalize_load_operation(data, index, load_type::SPECIAL, load_target::CPU);
 }
 
 void cpu::prepare_load_word(uint32_t addr, std::size_t index)
@@ -112,15 +113,32 @@ void cpu::prepare_load_word(uint32_t addr, std::size_t index)
     }
 
     uint32_t data{};
-    for (int i{}; i < 4; ++i)
+    for (unsigned int i{}; i < 4; ++i)
     {
         data |= system.read_memory(addr + i) << (8 * i);
     }
 
-    finalize_load_operation(data, index, load_type::REGULAR);
+    finalize_load_operation(data, index, load_type::REGULAR, load_target::CPU);
 }
 
 void cpu::prepare_load_imm(uint32_t imm, std::size_t index)
 {
-    finalize_load_operation(imm, index, load_type::REGULAR);
+    finalize_load_operation(imm, index, load_type::REGULAR, load_target::CPU);
+}
+
+void cpu::prepare_load_to_coprocessor(uint32_t addr, uint32_t coprocessor, std::size_t index)
+{
+    if (alignment_error(addr, data_size::WORD))
+    {
+        throw_exception(exception_type::ADEL);
+        return;
+    }
+
+    uint32_t data{};
+    for (unsigned int i{}; i < 4; ++i)
+    {
+        data |= system.read_memory(addr + i) << (8 * i);
+    }
+
+    finalize_load_operation(data, index, load_type::REGULAR, load_target::COPROCESSOR);
 }

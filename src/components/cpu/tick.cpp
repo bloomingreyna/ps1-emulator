@@ -1,6 +1,7 @@
 #include "components/cpu.h"
 #include "components/ps1.h"
 #include "utils/cpu_enums.h"
+#include "utils/exceptions.h"
 
 void cpu::tick()
 {
@@ -14,8 +15,7 @@ void cpu::tick()
         executing = false;
         pc = pc_change_vars.new_pc;
     }
-
-    if (exception_thrown)
+    else
     {
         jump_to_exception_vec();
         exception_thrown = false;
@@ -28,6 +28,12 @@ bool cpu::is_executing() const { return executing; }
 
 void cpu::fetch()
 {
+    if (alignment_error(pc, data_size::WORD))
+    {
+        throw_exception(exception_type::ADEL);
+        return;
+    }
+
     o.value = 0;
     for (unsigned int i{}; i < 4; ++i)
     {
@@ -54,9 +60,11 @@ void cpu::load_trigger()
 {
     if (load_vars.trigger_load)
     {
-        load_vars.loading = true;
         load_vars.load_data = load_vars.intermediate_load_data;
         load_vars.load_index = load_vars.intermediate_load_index;
+        load_vars.target = load_vars.intermediate_target;
+
+        load_vars.loading = true;
         load_vars.trigger_load = false;
     }
 }
