@@ -23,6 +23,8 @@ public:
     uint8_t read_memory(uint32_t addr);
     void write_memory(uint32_t addr, uint8_t value);
 private:
+    void throw_bus_error_exception();
+
     cpu c{};
     std::vector<uint8_t> system_ram{std::vector<uint8_t>(1024 * 1024 * 2)};
 };

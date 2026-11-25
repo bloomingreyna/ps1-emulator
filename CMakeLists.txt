@@ -18,6 +18,7 @@ add_executable(blps1
     src/components/system_control_processor/control_registers.cpp
     src/components/system_control_processor/status_register.cpp
     src/components/system/memory_accesses.cpp
+    src/components/system/bus_error.cpp
     src/instructions/opcode.cpp
     src/instructions/add.cpp
     src/instructions/bitwise.cpp

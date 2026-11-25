@@ -16,6 +16,7 @@ public:
     cpu();
 
     void tick();
+    bool is_executing() const;
 
     void throw_exception(exception_type e);
 
@@ -49,6 +50,8 @@ private:
     void load_trigger();
     void load_logic();
 
+    void finalize_load_operation(std::size_t index);
+
     ps1& system;
     sysctlproc scp{};
 
@@ -60,5 +63,6 @@ private:
     cpu_load_vars load_vars{};
     cpu_pc_change_vars pc_change_vars{};
 
+    bool executing{false};
     bool exception_thrown{false};
 };

@@ -10,7 +10,9 @@ void cpu::tick()
 
     if (!exception_thrown)
     {
+        executing = true;
         execute();
+        executing = false;
     }
     else
     {
@@ -21,6 +23,8 @@ void cpu::tick()
 
     load_logic();
 }
+
+bool cpu::is_executing() const { return executing; }
 
 void cpu::fetch()
 {
