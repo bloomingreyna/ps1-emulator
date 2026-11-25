@@ -19,3 +19,8 @@ enum class load_target
 {
     CPU, COPROCESSOR
 };
+
+enum class load_type
+{
+    REGULAR, SPECIAL
+};

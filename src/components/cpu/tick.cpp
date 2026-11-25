@@ -1,7 +1,6 @@
 #include "components/cpu.h"
+#include "components/ps1.h"
 #include "utils/cpu_enums.h"
-#include "utils/exceptions.h"
-#include "utils/sysctlproc_enums.h"
 
 void cpu::tick()
 {
@@ -15,11 +14,11 @@ void cpu::tick()
         executing = false;
         pc = pc_change_vars.new_pc;
     }
-    else
+
+    if (exception_thrown)
     {
         jump_to_exception_vec();
         exception_thrown = false;
-        return;
     }
 
     load_logic();
@@ -29,20 +28,19 @@ bool cpu::is_executing() const { return executing; }
 
 void cpu::fetch()
 {
+    o.value = 0;
+    for (unsigned int i{}; i < 4; ++i)
+    {
+        o.value |= system.read_memory(pc + i) << (8 * i);
+    }
+
     if (!pc_change_vars.changing_pc)
     {
         pc_change_vars.new_pc = pc + 4;
     }
     else
     {
-        if (!alignment_error(pc_change_vars.intermediate_new_pc, data_size::WORD))
-        {
-            pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
-        }
-        else
-        {
-            throw_exception(exception_type::ADEL);
-        }
+        pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
         pc_change_vars.changing_pc = false;
     }
 }

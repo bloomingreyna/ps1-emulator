@@ -5,6 +5,7 @@
 
 #include "components/cpu_vars.h"
 #include "components/system_control_processor.h"
+#include "instructions/opcode.h"
 #include "utils/cpu_enums.h"
 #include "utils/sysctlproc_enums.h"
 
@@ -50,10 +51,12 @@ private:
     void load_trigger();
     void load_logic();
 
-    void finalize_load_operation(std::size_t index);
+    void finalize_load_operation(uint32_t data, std::size_t index, load_type ltype);
 
     ps1& system;
     sysctlproc scp{};
+
+    opcode o{};
 
     std::array<uint32_t, 32> gprs{};
     uint32_t pc{};
