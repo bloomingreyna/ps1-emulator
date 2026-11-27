@@ -6,7 +6,7 @@
 
 void cpu::store(uint32_t addr, uint32_t value, data_size store_size)
 {
-    if (alignment_error(addr, store_size))
+    if (alignment_error(addr, store_size, *this))
     {
         throw_exception(exception_type::ADES);
         return;

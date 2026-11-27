@@ -9,14 +9,14 @@ set(CMAKE_CXX_STANDARD 23)
 add_executable(blps1
     src/main.cpp
     src/components/cpu/tick.cpp
-    src/components/cpu/throw_exception.cpp
+    src/components/cpu/exceptions.cpp
+    src/components/cpu/coprocessor_usable.cpp
     src/components/cpu/pc_change.cpp
     src/components/cpu/load.cpp
     src/components/cpu/store.cpp
     src/components/cpu/reg_getters.cpp
     src/components/cpu/reg_setters.cpp
     src/components/system_control_processor/control_registers.cpp
-    src/components/system_control_processor/status_register.cpp
     src/components/system/memory_accesses.cpp
     src/components/system/bus_error.cpp
     src/instructions/opcode.cpp

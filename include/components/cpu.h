@@ -46,6 +46,8 @@ public:
 
     uint32_t get_scp_cr(std::size_t index) const;
     void set_scp_cr(std::size_t index, uint32_t value);
+
+    void set_problem_addr(uint32_t addr);
 private:
     void fetch();
     void execute();
@@ -70,4 +72,6 @@ private:
 
     bool executing{false};
     bool exception_thrown{false};
+
+    uint32_t problematic_addr{};
 };

@@ -24,7 +24,7 @@ void cpu::finalize_load_operation(uint32_t data, std::size_t index, load_type lt
 
 void cpu::prepare_load(uint32_t addr, std::size_t index, data_size load_size, data_signedness signedness)
 {
-    if (alignment_error(addr, load_size))
+    if (alignment_error(addr, load_size, *this))
     {
         throw_exception(exception_type::ADEL);
         return;
@@ -106,7 +106,7 @@ void cpu::prepare_load(uint32_t addr, std::size_t index, word_segment segment)
 
 void cpu::prepare_load_word(uint32_t addr, std::size_t index)
 {
-    if (alignment_error(addr, data_size::WORD))
+    if (alignment_error(addr, data_size::WORD, *this))
     {
         throw_exception(exception_type::ADEL);
         return;
@@ -128,7 +128,7 @@ void cpu::prepare_load_imm(uint32_t imm, std::size_t index)
 
 void cpu::prepare_load_to_coprocessor(uint32_t addr, uint32_t coprocessor, std::size_t index)
 {
-    if (alignment_error(addr, data_size::WORD))
+    if (alignment_error(addr, data_size::WORD, *this))
     {
         throw_exception(exception_type::ADEL);
         return;
@@ -140,5 +140,6 @@ void cpu::prepare_load_to_coprocessor(uint32_t addr, uint32_t coprocessor, std::
         data |= system.read_memory(addr + i) << (8 * i);
     }
 
+    load_vars.target_coprocessor = coprocessor;
     finalize_load_operation(data, index, load_type::REGULAR, load_target::COPROCESSOR);
 }

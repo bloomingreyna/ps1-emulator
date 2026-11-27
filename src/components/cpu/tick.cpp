@@ -13,6 +13,7 @@ void cpu::tick()
         executing = true;
         execute();
         executing = false;
+
         pc = pc_change_vars.new_pc;
     }
     else
@@ -22,13 +23,14 @@ void cpu::tick()
     }
 
     load_logic();
+    pc_change_vars.changing_pc = false;
 }
 
 bool cpu::is_executing() const { return executing; }
 
 void cpu::fetch()
 {
-    if (alignment_error(pc, data_size::WORD))
+    if (alignment_error(pc, data_size::WORD, *this))
     {
         throw_exception(exception_type::ADEL);
         return;
@@ -47,7 +49,6 @@ void cpu::fetch()
     else
     {
         pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
-        pc_change_vars.changing_pc = false;
     }
 }
 
