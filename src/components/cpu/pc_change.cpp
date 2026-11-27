@@ -7,7 +7,7 @@ void cpu::prepare_branch(int32_t offset)
     if (!exception_thrown)
     {
         pc_change_vars.intermediate_new_pc = pc + 4 + offset;
-        pc_change_vars.changing_pc = true;
+        pc_change_vars.trigger_pc_change = true;
     }
 }
 
@@ -17,6 +17,6 @@ void cpu::prepare_jump(uint32_t addr)
     if (!exception_thrown)
     {
         pc_change_vars.intermediate_new_pc = addr;
-        pc_change_vars.changing_pc = true;
+        pc_change_vars.trigger_pc_change = true;
     }
 }

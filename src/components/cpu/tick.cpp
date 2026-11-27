@@ -2,11 +2,21 @@
 #include "components/ps1.h"
 #include "utils/cpu_enums.h"
 #include "utils/exceptions.h"
+#include "utils/sysctlproc_enums.h"
 
 void cpu::tick()
 {
     fetch();
     load_trigger();
+
+    uint32_t sr{scp.get_cr(static_cast<std::size_t>(ctl_reg::SR))};
+    uint32_t cause{scp.get_cr(static_cast<std::size_t>(ctl_reg::CAUSE))};
+    bool interrupts_enabled{(sr & 0x1) != 0};
+    bool interrupts_valid{(sr & cause & 0xFF00) != 0};
+    if (interrupts_valid && interrupts_valid)
+    {
+        throw_exception(exception_type::INT);
+    }
 
     if (!exception_thrown)
     {
@@ -42,6 +52,7 @@ void cpu::fetch()
         o.value |= system.read_memory(pc + i) << (8 * i);
     }
 
+    pc_change_vars.changing_pc = pc_change_vars.trigger_pc_change;
     if (!pc_change_vars.changing_pc)
     {
         pc_change_vars.new_pc = pc + 4;
@@ -49,6 +60,7 @@ void cpu::fetch()
     else
     {
         pc_change_vars.new_pc = pc_change_vars.intermediate_new_pc;
+        pc_change_vars.trigger_pc_change = false;
     }
 }
 
